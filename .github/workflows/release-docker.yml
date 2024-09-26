@@ -9,7 +9,7 @@ on:
 
 jobs:
   publish:
-    if: github.repository == 'sgl-project/sglang'
+    if: github.repository == 'KylinMountain/sglang'
     runs-on: ubuntu-latest
     environment: 'prod'
     strategy:
@@ -55,10 +55,10 @@ jobs:
             exit 1
           fi
 
-          docker build . -f docker/Dockerfile --build-arg CUDA_VERSION=${{ matrix.cuda_version }} --build-arg BUILD_TYPE=${{ matrix.build_type }} -t lmsysorg/sglang:${tag}${tag_suffix} --no-cache
-          docker push lmsysorg/sglang:${tag}${tag_suffix}
+          docker build . -f docker/Dockerfile --build-arg CUDA_VERSION=${{ matrix.cuda_version }} --build-arg BUILD_TYPE=${{ matrix.build_type }} -t kylinmountain/sglang:${tag}${tag_suffix} --no-cache
+          docker push kylinmountain/sglang:${tag}${tag_suffix}
 
           if [ "${{ matrix.cuda_version }}" = "12.1.1" ]; then
-            docker tag lmsysorg/sglang:${tag}${tag_suffix} lmsysorg/sglang:latest${tag_suffix}
-            docker push lmsysorg/sglang:latest${tag_suffix}
+            docker tag kylinmountain/sglang:${tag}${tag_suffix} kylinmountain/sglang:latest${tag_suffix}
+            docker push kylinmountain/sglang:latest${tag_suffix}
           fi
